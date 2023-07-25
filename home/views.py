@@ -7,9 +7,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 
+
 class Home(View):
     def get(self, request):
-        return render(request, 'home/home.html')
+        if request.user.is_authenticated:
+            return redirect('home:writers')
+        else:
+            return render(request, 'home/home.html')
 
 
 class About(View):
